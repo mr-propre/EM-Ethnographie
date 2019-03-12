@@ -9,70 +9,56 @@ import networkx.algorithms.community as com
 import community
 from operator import itemgetter
 
+ville = 1
+color_map = []
 G = nx.Graph()
 
+
+# Read and parse binômes
 with open("data/final_binomes.csv") as f:
     reader = csv.reader(f, delimiter=';')
 df = pandas.read_csv("data/final_binomes.csv", delimiter=';', header=0, names=["id1","id2","nomProjet","idProjet", "nbProjetCommun"])
 
-tekProject = [""]
 
+# Creation of edges and nodes
 i = 0
 for index,row in df.iterrows():
     if (row["id1"] != "hors_cohorte" and row["id2"] != "hors_cohorte" and int(row["nbProjetCommun"]) > 0):
         G.add_edge(row["id1"], row["id2"], weight=int(row["nbProjetCommun"]))
         i += 1
-color_map = []
-#cities = com.greedy_modularity_communities(G)
-def heaviest(G):
-    u, v, w = max(G.edges(data='weight'), key=itemgetter(2))
-    return (u, v)
-cities = com.girvan_newman(G, most_valuable_edge=heaviest)
+
+
+# first clustering to split cities, and remove node who don't belong to 'ville'
 p = community.best_partition(G, weight='weight')
-j = 0
-ville = 1
 for c, v in p.items():
     if (v != ville):
         G.remove_node(c)
 
+
+# second clustering to determine group inside a city
 p = community.best_partition(G, weight='weight')
 for c, v in p.items():
     print(v)
     color_map.append(v)
 
+
+# export clusters for the city
 f = open("data/cluster_" + str(ville) + ".csv", "w")
-f.write("")
 for c, v in p.items():
     f.write(str(c) + ";" + str(v) + ";" + str(ville) + "\n")
 f.close()
 
-# Girvan_newman
-#for c in cities:
-#    for b in sorted(c):
-#        j += 1
-#        for node in b:
-#            if (j != 3):
-#                color_map.append('blue')
-#            elif (j == 3):
-#                color_map.append('red')
-#        print ("\n\n\n\n")
-#    break
 
-j = 0
-#for city in cities:
-#    if (j == 1):
-#        for node in sorted(city):
-#            color_map.append('blue')
-#    else:
-#        for node in sorted(city):
-#            color_map.append('red')
-#    j += 1
-
+# export gexf format for gephi
 nx.write_gexf(G, "graph.gexf", prettyprint=True)
+
 
 print ("Number of edges : ", i)
 print ("Number of nodes : ", nx.number_of_nodes(G))
-weights = [G[u][v]['weight']/7 for u,v in G.edges]
+
+weights = [G[u][v]['weight']/7 for u,v in G.edges] # take weight into account for edges
+
+# draw and show
 nx.draw(G, node_size=50, width=weights, node_color=color_map)
 plt.show()
 
