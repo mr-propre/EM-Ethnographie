@@ -30,11 +30,21 @@ def heaviest(G):
 cities = com.girvan_newman(G, most_valuable_edge=heaviest)
 p = community.best_partition(G, weight='weight')
 j = 0
-
+ville = 1
 for c, v in p.items():
+    if (v != ville):
+        G.remove_node(c)
+
+p = community.best_partition(G, weight='weight')
+for c, v in p.items():
+    print(v)
     color_map.append(v)
 
-
+f = open("data/cluster_" + str(ville) + ".csv", "w")
+f.write("")
+for c, v in p.items():
+    f.write(str(c) + ";" + str(v) + ";" + str(ville) + "\n")
+f.close()
 
 # Girvan_newman
 #for c in cities:
@@ -58,11 +68,11 @@ j = 0
 #            color_map.append('red')
 #    j += 1
 
-
+nx.write_gexf(G, "graph.gexf", prettyprint=True)
 
 print ("Number of edges : ", i)
 print ("Number of nodes : ", nx.number_of_nodes(G))
 weights = [G[u][v]['weight']/7 for u,v in G.edges]
-nx.draw(G, node_size=10, width=weights, node_color=color_map)
+nx.draw(G, node_size=50, width=weights, node_color=color_map)
 plt.show()
 
