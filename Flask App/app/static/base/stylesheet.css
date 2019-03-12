@@ -1,0 +1,18 @@
+@media only screen and (max-width: 768px) {
+    #logo {
+        margin-top: 4px;
+    }
+    #logo-title {
+        visibility: hidden
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    #logo {
+        margin-top: 8px;
+    }
+    #logo-title {
+        margin-left: 70px;
+    }
+}
+
