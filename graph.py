@@ -43,14 +43,14 @@ for c, v in p.items():
 
 
 # export clusters for the city
-f = open("data/cluster_" + str(ville) + ".csv", "w")
-for c, v in p.items():
-    f.write(str(c) + ";" + str(v) + ";" + str(ville) + "\n")
-f.close()
+#f = open("data/cluster_" + str(ville) + ".csv", "w")
+#for c, v in p.items():
+#    f.write(str(c) + ";" + str(v) + ";" + str(ville) + "\n")
+#f.close()
 
 
 # export gexf format for gephi
-nx.write_gexf(G, "graph.gexf", prettyprint=True)
+# nx.write_gexf(G, "graph.gexf", prettyprint=True)
 
 
 print ("Number of edges : ", i)
