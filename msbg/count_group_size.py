@@ -6,6 +6,10 @@ import sys
 
 teams = []
 
+#file who work with a final binome sorted and without all the "hors_cohorte"
+
+
+#Function to determine the mean of the groupe size
 
 def mean_of_group_size(teams):
     j = 0
@@ -24,6 +28,7 @@ teams_in_actis = []
 
 set_acti = set()
 
+#first step is to clean the activity who were stored sometimes with '.' or with ',' between them
 
 for index, row in xlsx.iterrows():
     if str(row[2]).find(',') != -1:
@@ -38,6 +43,7 @@ print(len(list_acti))
 
 index = 0
 
+#Big function that i tried to optimize but it's trash, generate en excel with activity code and group size mean
 
 for index in range(0, 4723):
     print(index)

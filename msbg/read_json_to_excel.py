@@ -3,6 +3,9 @@
 import pandas as pd
 import sys
 
+#the title of this file is no more valid, i transformed the json into an excel before using it(personnal reasons)
+# the goal of this is to get all the module linked to the activities in it.
+
 filePath = sys.argv[1]
 json = pd.read_excel('transformedJson.xlsx')
 
@@ -10,6 +13,10 @@ resultDF = pd.DataFrame()
 
 list_modules = []
 list_acti = []
+
+# First step is to get the code of the module
+# If we didnt already work on it we create a new list
+# Then we get all the activity and put them in the boxes we created for them linked to an index to find the module name
 
 for index, row in json.iterrows():
     begin = row[1].find('\'codemodule\': \'') + 15
