@@ -5,22 +5,39 @@ import pandas
 import itertools
 from datetime import datetime
 
-df = pandas.read_csv("GPA.csv", delimiter=';', header=1)
-ref = pandas.read_csv("cluster_1.csv", delimiter=';', header=0, names=["id","cluster","city"])
+def write_file(row, f):
+    separator = ";"
+    f.write(separator.join(str(value) for value in row) + "\n")
 
-tab = []
+promo = pandas.read_csv("profile_promo_gpa.csv", delimiter=';', header=1, names=["id", "year", "promo", "city", "gpa"])
 
-f = open("gephi_gpa.csv", "w")
+tab_city = ["PAR", "BDX", "NCY", "LYN", "TLS", "REN", "LIL", "STG", "MPL", "NCE", "MAR", "RUN", "TIR", "NAN"]
 
-for index,row in df.iterrows():
-    for inde,ro in ref.iterrows():
-        if (ro["id"] == row[1]):
-            f.write(row[1] + ";" + row[2].replace(",", ".") + "\n")
-            #for value in row:
-            #    f.write(str(value) + ";")
-            #f.write(str(ro["cluster"]) + "\n")
+for city in tab_city:
+    f = open("promo_city/all_promo_" + city +"_profile.csv", "w")
+    fa = open("promo_city/2022_" + city +"_profile.csv", "w")
+    fb = open("promo_city/2021_" + city + "_profile.csv", "w")
+    fc = open("promo_city/2020_" + city + "_profile.csv", "w")
+    f.write("id;year;promo;city;gpa\n")
+    fa.write("id;year;promo;city;gpa\n")
+    fb.write("id;year;promo;city;gpa\n")
+    fc.write("id;year;promo;city;gpa\n")
 
-f.close()
+    for index,row in promo.iterrows():
+        if (row["city"] == city):
+            write_file(row, f)
+            if (row["promo"] == 2022):
+                write_file(row, fa)
+            if (row["promo"] == 2021):
+                write_file(row, fb)
+            if (row["promo"] == 2020):
+                write_file(row, fc)
+
+
+    f.close()
+    fa.close()
+    fb.close()
+    fc.close()
 
 
 
