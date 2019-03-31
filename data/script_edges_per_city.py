@@ -16,30 +16,7 @@ G = nx.Graph()
 
 df = pandas.read_csv("final_binomes.csv", delimiter=';', header=0, names=["id1", "id2","nomProjet","idProjet","nbProjetCommun"])
 
-def find_city(row):
-    f = pandas.read_csv("profile_promo_gpa.csv", delimiter=';', header=1, names=["id", "year", "promo", "city", "gpa"])
 
-    if (row["city"] == find_city(row["id1"], row["city"]) and row["city"] == find_city(row["id2"], row["city"])):
-    
-    for i, r in f:
-        if (r["id"] == row["id1"]):
-            if (r["city"] != row["city"]):
-                return ""
-        if (r["id"] == row["id2"]):
-            if (r["city"] != row["city"]):
-                return ""
-    return ()
-
-for city in tab_city:
-    for promo in tab_promo:
-        G.clear()
-        f = open("promo_city/" + promo + "_" + city + "binomes.csv")
-
-        for index, row in df.iterrows():
-            f.write(find_city(row))
-
-
-        f.close()
 
 
 

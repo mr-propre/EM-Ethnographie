@@ -15,8 +15,6 @@ G = nx.Graph()
 
 
 # Read and parse binômes
-with open("data/final_binomes.csv") as f:
-    reader = csv.reader(f, delimiter=';')
 df = pandas.read_csv("data/final_binomes.csv", delimiter=';', header=0, names=["id1","id2","nomProjet","idProjet", "nbProjetCommun"])
 
 
