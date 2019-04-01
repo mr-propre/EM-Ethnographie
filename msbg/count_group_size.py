@@ -50,7 +50,7 @@ for index in range(0, 4723):
     teams_in_actis.append([])
     for i, row in xlsx.iterrows():
         if len(teams_in_actis[index]) > 50:
-            break
+            break   
         j = 0
         if str(row[2]).find(list_acti[index]) != -1:
             j = 0
